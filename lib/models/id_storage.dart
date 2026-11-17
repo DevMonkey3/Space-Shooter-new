@@ -1,33 +1,30 @@
-import 'dart:io';
+import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:path_provider/path_provider.dart';
-
-/// Stores the player's online account id in a small file on the device,
+/// Remembers the player's online account id on this device (or browser),
 /// so the player only has to create an account once.
+///
+/// Uses Hive like the rest of the save data, which works on Android and
+/// on the web (where it is stored in the browser's IndexedDB).
 class IDStorage {
-  Future<File> get _localFile async {
-    final dir = await getApplicationDocumentsDirectory();
-    return File('${dir.path}/ID.txt');
-  }
+  static const String _boxName = 'AccountBox';
+  static const String _idKey = 'accountId';
+
+  Future<Box<String>> _box() => Hive.openBox<String>(_boxName);
 
   /// Returns the saved account id, or an empty string if there is none.
   Future<String> readID() async {
     try {
-      final file = await _localFile;
-      if (!await file.exists()) return '';
-      return (await file.readAsString()).trim();
+      return (await _box()).get(_idKey, defaultValue: '')!;
     } catch (_) {
       return '';
     }
   }
 
   Future<void> writeID(String id) async {
-    final file = await _localFile;
-    await file.writeAsString(id);
+    await (await _box()).put(_idKey, id);
   }
 
   Future<void> clearID() async {
-    final file = await _localFile;
-    if (await file.exists()) await file.delete();
+    await (await _box()).delete(_idKey);
   }
 }

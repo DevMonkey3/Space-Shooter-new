@@ -1,29 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
+  <!-- Replaced by the value of `flutter build web --base-href`. -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Space Shooter 2400: a free top-down space shooter you can play right in your browser. Blast enemy ships, grab power-ups, buy new spaceships and climb the online scoreboard.">
+  <meta name="theme-color" content="#07070D">
+
+  <!-- Link previews (chat apps, social media) -->
+  <meta property="og:title" content="Space Shooter 2400">
+  <meta property="og:description" content="Free top-down space shooter. Play in your browser, no download.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://devmonkey3.github.io/Space-Shooter-new/">
+  <meta property="og:image" content="https://devmonkey3.github.io/Space-Shooter-new/icons/Icon-512.png">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="space_shooter_2400">
+  <meta name="apple-mobile-web-app-title" content="Space Shooter 2400">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
@@ -31,16 +28,73 @@
 
   <title>Space Shooter 2400</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #07070D;
+      overflow: hidden;
+    }
+    #loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      color: #ffffff;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: radial-gradient(ellipse at center, #16123a 0%, #07070D 70%);
+      transition: opacity 0.4s ease;
+    }
+    #loading img {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      box-shadow: 0 0 40px rgba(80, 200, 255, 0.35);
+    }
+    #loading h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 4px;
+      text-align: center;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.6);
+    }
+    #loading .bar {
+      width: 180px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.15);
+      overflow: hidden;
+    }
+    #loading .bar::after {
+      content: "";
+      display: block;
+      width: 40%;
+      height: 100%;
+      background: #50c8ff;
+      animation: slide 1.1s ease-in-out infinite;
+    }
+    #loading p {
+      margin: 0;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+    @keyframes slide {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(250%); }
+    }
+  </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
-
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
+  <div id="loading">
+    <img src="icons/Icon-192.png" alt="">
+    <h1>SPACE SHOOTER<br>2400</h1>
+    <div class="bar"></div>
+    <p>Loading…</p>
+  </div>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

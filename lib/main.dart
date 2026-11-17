@@ -72,10 +72,46 @@ Future<void> main() async {
           fontFamily: 'BungeeInline',
           scaffoldBackgroundColor: Colors.black,
         ),
+        // On wide screens (desktop browsers) show the game in a centered
+        // portrait area instead of stretching menus across the window.
+        builder: (context, child) => PortraitFrame(child: child!),
         home: const MainMenu(),
       ),
     ),
   );
+}
+
+/// Keeps the whole app in a 9:16 portrait area. On phones this is the full
+/// screen; on wider windows the area is centered with dark bars at the sides.
+class PortraitFrame extends StatelessWidget {
+  final Widget child;
+  const PortraitFrame({super.key, required this.child});
+
+  static const double _ratio = 9 / 16;
+
+  @override
+  Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final size = media.size;
+    if (size.height <= 0 || size.width / size.height <= _ratio + 0.05) {
+      return child;
+    }
+    final frame = Size(size.height * _ratio, size.height);
+    return ColoredBox(
+      color: const Color(0xFF07070D),
+      child: Center(
+        child: SizedBox.fromSize(
+          size: frame,
+          child: ClipRect(
+            child: MediaQuery(
+              data: media.copyWith(size: frame),
+              child: child,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 // This function initializes hive with app's

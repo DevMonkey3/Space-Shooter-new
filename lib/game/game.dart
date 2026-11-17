@@ -315,6 +315,10 @@ class SpaceShooterGame extends FlameGame
   // Resets the game to initial state. Should be called
   // while restarting and exiting the game.
   void reset() {
+    // Quitting a round from the pause menu (Restart / Exit) still counts:
+    // upload the best score. After a game over it was already uploaded.
+    if (!_isGameOver) _submitHighScore();
+
     _isGameOver = false;
     _commandList.clear();
     _addLaterCommandList.clear();
